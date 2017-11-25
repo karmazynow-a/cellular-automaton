@@ -20,3 +20,12 @@ char rule150 (const char *arr, int index){
     return ALIVE;
   else return DEAD;
 }
+
+char rule30 (const char *arr, int index){
+  if ((arr[index-1]==ALIVE && arr[index]==DEAD && arr[index]==arr[index+1])
+    ||(arr[index-1]==DEAD && arr[index]==ALIVE && arr[index]==arr[index+1])
+    ||(arr[index]==ALIVE && arr[index-1]==DEAD && arr[index-1]==arr[index+1])
+    ||(arr[index+1]==ALIVE && arr[index-1]==DEAD && arr[index-1]==arr[index]))
+      return ALIVE;
+  else return DEAD;
+}

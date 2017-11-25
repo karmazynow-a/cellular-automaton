@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int main(void){
   char *arr1, *arr2;
   arr1 = malloc (SIZE + 1);
@@ -15,22 +16,25 @@ int main(void){
 
   while (1){
     printMenu();
-    mode = getchar();
+    mode = getSingleChar();
 
     switch (mode){
       case 'e':
         exit(-1);
       case '1':
-        rule = rule90;
+        lets_go(arr1, arr2, rule90);
         break;
       case '2':
-        rule = rule150;
+        lets_go(arr1, arr2, rule150);
+        break;
+      case '3':
+        lets_go(arr1, arr2, rule30);
         break;
       default:
         break;
     }
 
-    lets_go(arr1, arr2, rule90);
+    wait(5);
   }
 
   free(arr1);
