@@ -1,4 +1,5 @@
 #include "flow_control.h"
+#include "rules.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -20,30 +21,11 @@ void wait() {
   while (time(0) < ttime + DELAY);
 }
 
-char rule90 (const char *arr, int index){
-  if ((arr[index-1]==ALIVE && arr[index]==arr[index+1] && arr[index+1]==DEAD)
-    ||(arr[index-1]==DEAD && arr[index]==arr[index+1] && arr[index+1]==ALIVE)
-    ||(arr[index]==ALIVE && arr[index-1]==arr[index+1] && arr[index+1]==DEAD)
-    ||(arr[index+1]==ALIVE && arr[index-1]==arr[index] && arr[index]==DEAD))
-  return ALIVE;
-  else return DEAD;
-}
-
-char rule150 (const char *arr, int index){
-  if ((arr[index-1]==arr[index] && arr[index]==arr[index+1] && arr[index+1]==ALIVE)
-    ||(arr[index-1]==ALIVE && arr[index]==arr[index+1] && arr[index+1]==DEAD)
-    ||(arr[index-1]==arr[index] && arr[index]==ALIVE && arr[index+1]==DEAD)
-    ||(arr[index]==ALIVE && arr[index-1]==arr[index+1] && arr[index+1]==DEAD)
-    ||(arr[index+1]==ALIVE && arr[index-1]==arr[index] && arr[index]==DEAD))
-    return ALIVE;
-  else return DEAD;
-}
-
-void lets_go(char * arr1, char * arr2){
+void lets_go(char * arr1, char * arr2,char (* rule)(const char*, int)){
   initialize(arr1, arr2);
 
   while (1) {
-    for (int i=1; i<SIZE-1;i++) arr2[i] = rule150(arr1, i);
+    for (int i=1; i<SIZE-1;i++) arr2[i] = rule(arr1, i);
 
     wait();
   //  system("clear");
@@ -53,4 +35,9 @@ void lets_go(char * arr1, char * arr2){
     if (memcmp (arr1, arr2, SIZE)==0) break;
     memmove(arr1, arr2, SIZE);
   }
+}
+
+void printMenu(){
+  system("clear");
+  printf("Choose your rule:\n1 - rule90\n2 - rule150\n\nPress 'e' to escape\n");
 }

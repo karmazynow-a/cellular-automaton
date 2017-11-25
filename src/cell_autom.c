@@ -1,4 +1,5 @@
 #include "flow_control.h"
+#include "rules.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,7 +9,29 @@ int main(void){
   arr2 = malloc (SIZE + 1);
   if (arr1==NULL || arr2==NULL) exit(-1);
 
-  lets_go(arr1, arr2);
+  char (* rule)(const char*, int);
+  char mode;
+
+
+  while (1){
+    printMenu();
+    mode = getchar();
+
+    switch (mode){
+      case 'e':
+        exit(-1);
+      case '1':
+        rule = rule90;
+        break;
+      case '2':
+        rule = rule150;
+        break;
+      default:
+        break;
+    }
+
+    lets_go(arr1, arr2, rule90);
+  }
 
   free(arr1);
   free(arr2);
